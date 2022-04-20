@@ -6,7 +6,7 @@
 #    By: alefranc <alefranc@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/16 15:00:23 by alefranc          #+#    #+#              #
-#    Updated: 2022/04/16 13:43:57 by alefranc         ###   ########.fr        #
+#    Updated: 2022/04/20 12:51:48 by alefranc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,10 @@ PROJINC_FLAG = -I include
 #------------------------------------#
 
 SRCDIR = src/
-SRCFILES =	main.c
+SRCFILES =	main.c \
+			parse.c \
+			forks.c \
+			philo.c
 
 SRC = $(addprefix $(SRCDIR), $(SRCFILES))
 

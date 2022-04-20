@@ -1,28 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   init_forks.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alefranc <alefranc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/16 13:18:35 by alefranc          #+#    #+#             */
-/*   Updated: 2022/04/20 12:53:39 by alefranc         ###   ########.fr       */
+/*   Created: 2022/04/20 12:19:35 by alefranc          #+#    #+#             */
+/*   Updated: 2022/04/20 12:47:33 by alefranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	main(int argc, char **argv)
+pthread_mutex_t	*init_forks(int nb_philo)
 {
-	t_input			input;
 	pthread_mutex_t	*forks;
-	pthread_t		*philos;
+	int				i;
 
-	if (parse_input(&input, argc, argv) == -1)
-		return (1);
-	printf("nb_philo=%d, die=%d, eat=%d, sleep=%d\n", input.nb_philo, input.time2die, input.time2eat, input.time2sleep);
-	forks = init_forks(input.nb_philo);
-	philos = init_philos(&input);
-	destroy_forks(&forks, input.nb_philo);
+	forks = malloc(sizeof(*forks) * nb_philo);
+	i = 0;
+	while (i < nb_philo)
+	{
+		pthread_mutex_init(&forks[i], NULL);
+		i++;
+	}
+	return (forks);
+}
+
+int	destroy_forks(pthread_mutex_t **forks, int nb_philo)
+{
+	pthread_mutex_t	*forks_tmp;
+	int				i;
+
+	forks_tmp = *forks;
+	i = 0;
+	while (i < nb_philo)
+	{
+		pthread_mutex_destroy(&forks_tmp[i]);
+		i++;
+	}
+	free(*forks);
 	return (0);
 }

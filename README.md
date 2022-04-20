@@ -20,7 +20,7 @@ Threads
 - `int pthread_create(pthread_t *thread, NULL, void *(*routine)(void *), void *arg)`: Create a thread running the `routine(arg)` function
 - `int pthread_detach(pthread_t thread)`
 - `int pthread_join(pthread_t thread, void **retval)`: Wait for the thread to terminate and catch routine return into `retval`
-- `int pthread_mutex_init(pthread_mutex_t *mutex)`: Initialize the mutex
+- `int pthread_mutex_init(pthread_mutex_t *mutex,NULL)`: Initialize the mutex
 - `int pthread_mutex_destroy(pthread_mutex_t *mutex)`: Destroy the mutex
 - `int pthread_mutex_lock(pthread_mutex_t *mutex)`: Lock the mutex
 - `int pthread_mutex_unlock(pthread_mutex_t *mutex)`: Unlock the mutex
@@ -52,6 +52,36 @@ Chaque changement d'etat doit etre log:
 Check les morts toutes les 10ms.
 
 # Pseudo Code
+
+```
+struct input
+{
+	int nb_philo;
+	int time2die;
+	int time2eat;
+	int time2sleep;
+}
+
+struct philo
+{
+	int				id;
+	input_t			*input;
+	pthread_mutex_t	*l_fork;
+	pthread_mutex_t	*r_fork;
+	forks_t	*forks;
+}
+
+main:
+	input_t			input;
+	pthread_mutex_t	*forks;
+
+	input = parse_input();
+
+	forks = malloc(sizeof(*forks) * input->nb_philo)
+	forks = init_forks();
+
+
+```
 
 ```
 routine(args):
