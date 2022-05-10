@@ -1,16 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_forks.c                                       :+:      :+:    :+:   */
+/*   forks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alefranc <alefranc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:19:35 by alefranc          #+#    #+#             */
-/*   Updated: 2022/04/20 12:47:33 by alefranc         ###   ########.fr       */
+/*   Updated: 2022/05/10 18:09:50 by alefranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+int	is_used(pthread_mutex_t fork)
+{
+	if (fork.__data.__lock == 1)
+		return (1);
+	return (0);
+}
 
 pthread_mutex_t	*init_forks(int nb_philo)
 {

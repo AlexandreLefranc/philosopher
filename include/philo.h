@@ -6,7 +6,7 @@
 /*   By: alefranc <alefranc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 13:15:49 by alefranc          #+#    #+#             */
-/*   Updated: 2022/04/20 12:52:03 by alefranc         ###   ########.fr       */
+/*   Updated: 2022/05/10 18:14:10 by alefranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,23 @@
 
 # include <stdio.h>
 
-// typedef struct s_sim
-// {
-// 	int		running;
-// 	t_dlst	philo;
-// }	t_sim;
-
 typedef struct s_input
 {
 	int	nb_philo;
 	int	time2die;
 	int	time2eat;
 	int	time2sleep;
+	int	nb_meals;
+
+	int	running;
+	struct timeval	*start;
 }	t_input;
+
+typedef struct s_routine_arg
+{
+	t_input	*input;
+	int		id;
+}	t_routine_arg;
 
 // parse.c
 int	parse_input(t_input *input, int argc, char **argv);
@@ -43,5 +47,6 @@ int	destroy_forks(pthread_mutex_t **forks, int nb_philo);
 
 // philo.c
 pthread_t	*init_philos(t_input	*input);
+int		destroy_philos(pthread_t	**philos);
 
 #endif

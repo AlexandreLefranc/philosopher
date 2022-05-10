@@ -6,7 +6,7 @@
 /*   By: alefranc <alefranc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 18:11:25 by alefranc          #+#    #+#             */
-/*   Updated: 2022/04/20 16:22:34 by alefranc         ###   ########.fr       */
+/*   Updated: 2022/05/10 17:30:16 by alefranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,16 @@ void	*routine(void *arg)
 
 int main(void)
 {
+	pthread_mutex_t	mutex2;
 
 	pthread_mutex_init(&mutex, NULL);
+
+	pthread_mutex_init(&mutex2, NULL);
+	printf("lock=%d\n", mutex2.__data.__lock);
+	pthread_mutex_lock(&mutex2);
+	printf("lock=%d\n", mutex2.__data.__lock);
+	pthread_mutex_unlock(&mutex2);
+	printf("lock=%d\n", mutex2.__data.__lock);
 
 	pthread_t	t;
 	pthread_create(&t, NULL, &routine, NULL);

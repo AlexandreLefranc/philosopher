@@ -6,7 +6,7 @@
 /*   By: alefranc <alefranc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:47:51 by alefranc          #+#    #+#             */
-/*   Updated: 2022/04/20 15:02:37 by alefranc         ###   ########.fr       */
+/*   Updated: 2022/05/10 17:09:35 by alefranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,6 @@ pthread_t	*init_philos(t_input	*input)
 
 int		destroy_philos(pthread_t	**philos)
 {
-	(void)
+	free(*philos);
+	return (0);
 }
