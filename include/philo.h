@@ -6,7 +6,7 @@
 /*   By: alefranc <alefranc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 13:15:49 by alefranc          #+#    #+#             */
-/*   Updated: 2022/05/10 18:14:10 by alefranc         ###   ########.fr       */
+/*   Updated: 2022/05/21 19:17:04 by alefranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,15 @@ typedef struct s_routine_arg
 	t_input	*input;
 	int		id;
 }	t_routine_arg;
+
+typedef struct s_philo
+{
+	pthread_t		thread;
+	pthread_mutex_t	lfork;
+	pthread_mutex_t	rfork;
+	int				id;
+
+}	t_philo;
 
 // parse.c
 int	parse_input(t_input *input, int argc, char **argv);
