@@ -100,3 +100,24 @@ routine(args):
 		sleep(time2sleep)
 		print(thinking)
 ```
+
+```
+Main:
+	Recuperer les inputs_infos
+	Creer les fouchettes mutex
+	Lancer les philos
+	Checker en boucle la vie des philos
+	Join les philos
+
+Routine: args = forks, philo_id, time_start, inputs_infos, keep_going_sim, nb_repas
+	Tant que la simulation continue ET que le nb_repas n'est pas atteint :
+		Attendre que les deux fourchettes soient dispo
+		Si la simulation continue:
+			Lock les fourchettes
+			Manger
+			Unlock les fourchettes
+		Si la simulation continue:
+			Dormir
+		Si la simulation continue:
+			Penser
+```
