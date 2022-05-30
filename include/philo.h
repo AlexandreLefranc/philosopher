@@ -6,7 +6,7 @@
 /*   By: alefranc <alefranc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 13:15:49 by alefranc          #+#    #+#             */
-/*   Updated: 2022/05/21 19:17:04 by alefranc         ###   ########.fr       */
+/*   Updated: 2022/05/30 22:41:51 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,19 @@
 
 # include <stdio.h>
 
+enum e_fork_state
+{
+	FREE,
+	USED
+};
+
 typedef struct s_input
 {
 	int	nb_philo;
 	int	time2die;
 	int	time2eat;
 	int	time2sleep;
-	int	nb_meals;
+	int	nb_meal_max;
 
 	int	running;
 	struct timeval	*start;
@@ -55,7 +61,7 @@ pthread_mutex_t	*init_forks(int nb_philo);
 int	destroy_forks(pthread_mutex_t **forks, int nb_philo);
 
 // philo.c
-pthread_t	*init_philos(t_input	*input);
-int		destroy_philos(pthread_t	**philos);
+pthread_t	*init_philos(t_input *input);
+int		destroy_philos(pthread_t **philos);
 
 #endif
