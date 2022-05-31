@@ -6,7 +6,7 @@
 /*   By: alefranc <alefranc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:02:25 by alefranc          #+#    #+#             */
-/*   Updated: 2022/05/10 17:32:02 by alefranc         ###   ########.fr       */
+/*   Updated: 2022/05/31 15:43:48 by alefranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,8 @@ int	parse_input(t_input *input, int argc, char **argv)
 	input->time2eat = atoi(argv[3]);
 	input->time2sleep = atoi(argv[4]);
 	if (argv[5] != NULL)
-		input->nb_meals = atoi(argv[5]);
+		input->nb_meal_max = atoi(argv[5]);
 	else
-		input->nb_meals = -1;
-	input->running = 1;
-
+		input->nb_meal_max = -1;
 	return (0);
 }

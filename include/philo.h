@@ -6,7 +6,7 @@
 /*   By: alefranc <alefranc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 13:15:49 by alefranc          #+#    #+#             */
-/*   Updated: 2022/05/30 22:41:51 by alex             ###   ########.fr       */
+/*   Updated: 2022/05/31 16:01:39 by alefranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,25 +33,27 @@ typedef struct s_input
 	int	time2eat;
 	int	time2sleep;
 	int	nb_meal_max;
-
-	int	running;
-	struct timeval	*start;
 }	t_input;
 
-typedef struct s_routine_arg
+typedef struct s_table
 {
-	t_input	*input;
-	int		id;
-}	t_routine_arg;
+	int			*forks;
+	pthread_t	*philos;
+}	t_table;
 
-typedef struct s_philo
+typedef struct s_thread_arg
 {
-	pthread_t		thread;
-	pthread_mutex_t	lfork;
-	pthread_mutex_t	rfork;
-	int				id;
+	int				*running;
+	pthread_mutex_t	handle_fork;
+	struct timeval	start_time;
+	t_input			*input;
 
-}	t_philo;
+	size_t			id;
+	int				*left_fork;
+	int				*right_fork;
+	size_t			nb_meals;
+	struct timeval	last_meal;
+}	t_thread_arg;
 
 // parse.c
 int	parse_input(t_input *input, int argc, char **argv);
