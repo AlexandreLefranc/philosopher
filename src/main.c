@@ -6,7 +6,7 @@
 /*   By: alefranc <alefranc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 13:18:35 by alefranc          #+#    #+#             */
-/*   Updated: 2022/06/01 12:53:42 by alex             ###   ########.fr       */
+/*   Updated: 2022/06/12 13:27:28 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,49 +45,49 @@ void	*routine(void *arg)
 	return (NULL);
 }
 
-static void
-start_sim(t_input *input, int *forks, t_philo_id_card *philo, pthread_mutex_t *handle_fork)
-{
-	int	i;
-	int	running;
-
-	running = 1;
-	i = 0;
-	while (i < input->nb_philo)
-	{
-		philo[i].id = i + 1;
-		gettimeofday(&(philo[i].start_existance), NULL);
-		philo[i].last_meal = philo[i].start_existance;
-		philo[i].nb_meals = 0;
-		philo[i].forks = forks;
-		philo[i].handle_fork = handle_fork;
-		philo[i].running = &running;
-		philo[i].input = input;
-		pthread_create(&(philo[i].thread), NULL, &routine, philo + i);
-		usleep(1);
-		i++;
-	}
-}
+// static void
+// start_sim(t_input *input, int *forks, t_philo_id_card *philo, pthread_mutex_t *handle_fork)
+// {
+// 	int	i;
+// 	int	running;
+//
+// 	running = 1;
+// 	i = 0;
+// 	while (i < input->nb_philo)
+// 	{
+// 		philo[i].id = i + 1;
+// 		gettimeofday(&(philo[i].start_existance), NULL);
+// 		philo[i].last_meal = philo[i].start_existance;
+// 		philo[i].nb_meals = 0;
+// 		philo[i].forks = forks;
+// 		philo[i].handle_fork = handle_fork;
+// 		philo[i].running = &running;
+// 		philo[i].input = input;
+// 		pthread_create(&(philo[i].thread), NULL, &routine, philo + i);
+// 		usleep(1);
+// 		i++;
+// 	}
+// }
 
 int	main(int argc, char **argv)
 {
-	t_input			input;
-	int				*forks;
-	t_philo_id_card	*philo;
-	pthread_mutex_t	handle_fork;
+	t_sim	sim;
 
-	if (parse_input(&input, argc, argv) != 0)
+	sim.running = 1;
+	if (parse_input(&(sim.input), argc, argv) != 0)
 		return (1);
-	print_input(&input);
-	forks = calloc(sizeof(*forks), input.nb_philo);
-	philo = calloc(sizeof(*philo), input.nb_philo);
-
-	pthread_mutex_init(&handle_fork, NULL);
-	start_sim(&input, forks, philo, &handle_fork);
+	sim.forks = calloc(sizeof(*(sim.forks)), sim.input.nb_philo);
+	pthread_mutex_init(&(sim.handle_fork), NULL);
+	// forks = calloc(sizeof(*forks), input.nb_philo);
+	// philo = calloc(sizeof(*philo), input.nb_philo);
+	//
+	// pthread_mutex_init(&handle_fork, NULL);
+	// start_sim(&input, forks, philo, &handle_fork);
+	print_t_sim(sim);
 
 	// print_philo(philo);
-	free(forks);
-	free(philo);
+	// free(sim.forks);
+	// free(philo);
 
 	return (0);
 }

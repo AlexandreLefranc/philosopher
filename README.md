@@ -121,3 +121,25 @@ Routine: args = forks, philo_id, time_start, inputs_infos, keep_going_sim, nb_re
 		Si la simulation continue:
 			Penser
 ```
+
+# Plan
+
+```
+0/ main
+	1/ Initialiser la structure t_sim
+	2/ Lancer la simulation
+	3/ Superviser la simulation
+
+1/ Initialiser la stucture t_sim
+	1.1/ Initialiser running
+	1.2/ Parser les inputs
+	1.3/ Malloc et initialiser le tableau de forks
+	1.4/ Initialiser le mutex handle_fork
+	1.5/ Malloc et initialiser le tableau de philo
+
+2/ Lancer la simulation
+
+3/ Superviser la simulation
+	3.1/ Verifier si un philo est mort de faim
+	3.2/ Verifier si tous les philos ont fini la simulation
+```

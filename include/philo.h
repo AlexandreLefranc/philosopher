@@ -6,7 +6,7 @@
 /*   By: alefranc <alefranc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 13:15:49 by alefranc          #+#    #+#             */
-/*   Updated: 2022/06/01 12:11:45 by alex             ###   ########.fr       */
+/*   Updated: 2022/06/12 14:14:14 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,6 @@ typedef struct s_input
 	int	nb_meal_max;
 }	t_input;
 
-// typedef struct s_table
-// {
-// 	int			*forks;
-// 	pthread_t	*philos;
-// }	t_table;
-
 typedef struct s_philo_id_card
 {
 	pthread_t		thread;
@@ -53,6 +47,21 @@ typedef struct s_philo_id_card
 	int				*running;
 	t_input			*input;
 }	t_philo_id_card;
+
+typedef struct s_sim
+{
+	int				running;
+	t_input			input;
+	pthread_mutex_t	handle_fork;
+	int				*forks;
+	t_philo_id_card	*philo;
+}	t_sim;
+
+// typedef struct s_table
+// {
+// 	int			*forks;
+// 	pthread_t	*philos;
+// }	t_table;
 
 // typedef struct s_thread_arg
 // {
@@ -81,7 +90,8 @@ int		destroy_philos(pthread_t **philos);
 
 // debug.c
 void	print_philo(t_philo_id_card *philo);
-void	print_input(t_input *input);
+void	print_input(t_input input);
+void	print_t_sim(t_sim sim);
 
 
 #endif

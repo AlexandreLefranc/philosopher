@@ -1,12 +1,12 @@
 #include "philo.h"
 
-void	print_input(t_input *input)
+void	print_input(t_input input)
 {
-	printf("nb_philo = %d\n", input->nb_philo);
-	printf("time2die = %d\n", input->time2die);
-	printf("time2eat = %d\n", input->time2eat);
-	printf("time2sleep = %d\n", input->time2sleep);
-	printf("nb_meal_max = %d\n", input->nb_meal_max);
+	printf("nb_philo = %d\n", input.nb_philo);
+	printf("time2die = %d\n", input.time2die);
+	printf("time2eat = %d\n", input.time2eat);
+	printf("time2sleep = %d\n", input.time2sleep);
+	printf("nb_meal_max = %d\n", input.nb_meal_max);
 	printf("\n");
 }
 
@@ -30,4 +30,14 @@ void	print_philo(t_philo_id_card *philo)
 		printf("\n");
 		i++;
 	}
+}
+
+void	print_t_sim(t_sim sim)
+{
+	printf("running = %d\n\n", sim.running);
+	print_input(sim.input);
+	printf("forks = ");
+	for (int i = 0; i < sim.input.nb_philo; i++)
+		printf("%d ", sim.forks[i]);
+	printf("\n\n");
 }
