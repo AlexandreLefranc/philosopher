@@ -27,6 +27,8 @@ int	main(void)
 	pthread_detach(t);
 	pthread_detach(t2);
 
+	sleep(2);
+
 	// pthread_join(t, NULL);
 	// pthread_join(t2, NULL);
 }

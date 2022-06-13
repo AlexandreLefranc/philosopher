@@ -34,7 +34,7 @@ void	print_input(t_input input)
 
 void	print_t_sim(t_sim sim)
 {
-	printf("running = %d\n\n", sim.running);
+	printf("running = %d (%p)\n\n", sim.running, &sim.running);
 	print_input(sim.input);
 	printf("forks = ");
 	for (int i = 0; i < sim.input.nb_philo; i++)
@@ -46,10 +46,10 @@ void	print_t_sim(t_sim sim)
 		printf("philo[%d].id = %d\n", i, sim.philo[i].id);
 		printf("philo[%d].start_existance = %ld %ld\n", i, sim.philo[i].start_existance.tv_sec, sim.philo[i].start_existance.tv_usec);
 		printf("philo[%d].last_meal =       %ld %ld\n", i, sim.philo[i].last_meal.tv_sec, sim.philo[i].last_meal.tv_usec);
-		printf("philo[%d].nb_meals = %zu\n", i, sim.philo[i].nb_meals);
+		printf("philo[%d].nb_meals = %d\n", i, sim.philo[i].nb_meals);
 		printf("philo[%d].lfork = %p (%d)\n", i, sim.philo[i].lfork, *sim.philo[i].lfork);
 		printf("philo[%d].rfork = %p (%d)\n", i, sim.philo[i].rfork, *sim.philo[i].rfork);
-		printf("philo[%d].running = %d\n", i, *sim.philo[i].running);
+		printf("philo[%d].running = %d (%p)\n", i, *sim.philo[i].running, sim.philo[i].running);
 		printf("\n");
 	}
 }

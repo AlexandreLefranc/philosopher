@@ -6,7 +6,7 @@
 /*   By: alefranc <alefranc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 13:15:49 by alefranc          #+#    #+#             */
-/*   Updated: 2022/06/13 11:54:56 by alefranc         ###   ########.fr       */
+/*   Updated: 2022/06/13 14:52:48 by alefranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ typedef struct s_philo_id_card
 	int				id;
 	struct timeval	start_existance;
 	struct timeval	last_meal;
-	size_t			nb_meals;
+	int				nb_meals;
 	int				*lfork;
 	int				*rfork;
 	pthread_mutex_t	*handle_fork;
