@@ -6,7 +6,7 @@
 #    By: alefranc <alefranc@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/16 15:00:23 by alefranc          #+#    #+#              #
-#    Updated: 2022/06/01 11:27:27 by alex             ###   ########.fr        #
+#    Updated: 2022/06/15 16:18:17 by alefranc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,12 +39,8 @@ PROJINC_FLAG = -I include
 #               SOURCES              #
 #------------------------------------#
 
-SRCDIR = src/
-SRCFILES =	main.c \
-			parse.c \
-			forks.c \
-			philo.c \
-			debug.c
+SRCDIR = src2/
+SRCFILES =	main.c
 
 SRC = $(addprefix $(SRCDIR), $(SRCFILES))
 
@@ -59,7 +55,7 @@ OBJ = $(addprefix $(OBJDIR), $(SRCFILES:.c=.o))
 #               HEADER               #
 #------------------------------------#
 
-HEADER = include/philo.h
+HEADER = include/philo2.h
 
 #------------------------------------#
 #              MINILIBX              #
