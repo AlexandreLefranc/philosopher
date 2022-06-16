@@ -6,7 +6,7 @@
 /*   By: alefranc <alefranc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 16:16:38 by alefranc          #+#    #+#             */
-/*   Updated: 2022/06/16 15:24:28 by alefranc         ###   ########.fr       */
+/*   Updated: 2022/06/16 15:44:52 by alefranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ enum e_errors
 	ERR_OK = 0,
 	ERR_MALLOC,
 	ERR_ARG,
-	ERR_MUTEX
+	ERR_MUTEX,
+	ERR_TIME
 };
 
 enum e_fork_state
@@ -63,7 +64,6 @@ typedef struct s_philo
 	int				id;
 	int				state;
 	pthread_t		thread;
-	struct timeval	start_existance;
 	struct timeval	last_meal;
 	int				nb_meals;
 
@@ -72,10 +72,11 @@ typedef struct s_philo
 
 typedef struct s_sim
 {
-	int		running;
-	t_input	*input;
-	t_fork	*forks;
-	t_philo	*philos;
+	int				running;
+	struct timeval	t0;
+	t_input			*input;
+	t_fork			*forks;
+	t_philo			*philos;
 }	t_sim;
 
 #endif

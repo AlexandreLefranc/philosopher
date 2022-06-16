@@ -6,11 +6,24 @@
 /*   By: alefranc <alefranc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 16:17:33 by alefranc          #+#    #+#             */
-/*   Updated: 2022/06/16 15:19:56 by alefranc         ###   ########.fr       */
+/*   Updated: 2022/06/16 16:20:08 by alefranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo2.h"
+
+// static long int	get_time_since(struct timeval t0)
+// {
+// 	long int		diff;
+// 	struct timeval	t1;
+//
+// 	if (gettimeofday(&t1, NULL) != 0)
+// 		return (-1);
+// 	diff = 0;
+// 	diff += (t1.tv_sec - t0.tv_sec) * 1000;
+// 	diff += (t1.tv_usec - t0.tv_usec) / 1000;
+// 	return (diff);
+// }
 
 static void	print_usage()
 {
@@ -99,29 +112,52 @@ static int	init_forks(t_sim *sim)
 	return (ERR_OK);
 }
 
-// static int	init_philo(t_sim *sim)
-// {
-//
-// }
+static int	init_philo(t_sim *sim)
+{
+	t_philo	*philos;
+	int		i;
+
+	philos = calloc(sizeof(*philos), sim->input->nb_philo);
+	if (philos == NULL)
+		return (ERR_MALLOC);
+	i = 0;
+	while (i < sim->input->nb_philo)
+	{
+		philos[i].id = i + 1;
+		philos[i].state = THINKING;
+		// philos[i].
+	}
+	return (ERR_OK);
+}
 
 static int	init_sim(t_sim *sim, int argc, char **argv)
 {
 	int	errcode;
 
 	errcode = parse_input(sim, argc, argv);
-	// if (errcode != ERR_OK)
-	// 	return (errcode);
+	if (errcode != ERR_OK)
+		return (errcode);
 	errcode = check_input(sim);
-	// if (errcode != ERR_OK)
-	// 	return (errcode);
+	if (errcode != ERR_OK)
+		return (errcode);
 	errcode = init_forks(sim);
-	// if (errcode != ERR_OK)
-	// 	return (errcode);
-	// errcode = init_philo(sim)
-	// if (errcode != ERR_OK)
-	// 	return (errcode);
+	if (errcode != ERR_OK)
+		return (errcode);
+	errcode = init_philo(sim);
+	if (errcode != ERR_OK)
+		return (errcode);
 	return (ERR_OK);
 }
+
+// static void	*routine(void *arg)
+// {
+// 	t_philo	*philo;
+//
+// 	philo = (t_philo *)arg;
+// 	philo->last_meal
+// 	while (1);
+// 	return (NULL);
+// }
 
 int	main(int argc, char **argv)
 {
@@ -134,4 +170,7 @@ int	main(int argc, char **argv)
 	errcode = init_sim(sim, argc, argv);
 	if (errcode != ERR_OK)
 		return (free_t_sim(sim), print_err(errcode), errcode);
+	// start_sim(sim);
+	// monitor_sim(sim);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: alefranc <alefranc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 13:18:35 by alefranc          #+#    #+#             */
-/*   Updated: 2022/06/13 16:30:16 by alefranc         ###   ########.fr       */
+/*   Updated: 2022/06/16 15:59:43 by alefranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	print_taking_fork(t_philo_id_card *id_card)
 	gettimeofday(&now, NULL);
 	diff = diff_time_in_msec(now, id_card->start_existance);
 	if (*id_card->running == 1)
-		printf("%ld ms %d had taken a fork\n", diff, id_card->id);
+		printf("%ld %d has taken a fork\n", diff, id_card->id);
 }
 
 static void	print_eating(t_philo_id_card *id_card)
@@ -57,7 +57,7 @@ static void	print_eating(t_philo_id_card *id_card)
 	gettimeofday(&now, NULL);
 	diff = diff_time_in_msec(now, id_card->start_existance);
 	if (*id_card->running == 1)
-		printf("%ld ms %d is eating\n", diff, id_card->id);
+		printf("%ld %d is eating\n", diff, id_card->id);
 }
 
 static void	print_sleeping(t_philo_id_card *id_card)
@@ -68,7 +68,7 @@ static void	print_sleeping(t_philo_id_card *id_card)
 	gettimeofday(&now, NULL);
 	diff = diff_time_in_msec(now, id_card->start_existance);
 	if (*id_card->running == 1)
-		printf("%ld ms %d is sleeping\n", diff, id_card->id);
+		printf("%ld %d is sleeping\n", diff, id_card->id);
 }
 
 static void	print_thinking(t_philo_id_card *id_card)
@@ -79,7 +79,7 @@ static void	print_thinking(t_philo_id_card *id_card)
 	gettimeofday(&now, NULL);
 	diff = diff_time_in_msec(now, id_card->start_existance);
 	if (*id_card->running == 1)
-		printf("%ld ms %d is thinking\n", diff, id_card->id);
+		printf("%ld %d is thinking\n", diff, id_card->id);
 }
 
 static void	*routine(void *arg)
@@ -153,7 +153,7 @@ static int	is_dead(t_philo_id_card *id_card)
 	if (diff > id_card->input->time2die)
 	{
 		diff = diff_time_in_msec(now, id_card->start_existance);
-		printf("%ld ms %d died\n", diff, id_card->id);
+		printf("%ld %d died\n", diff, id_card->id);
 		return (1);
 	}
 	return (0);
