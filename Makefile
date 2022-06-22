@@ -6,7 +6,7 @@
 #    By: alefranc <alefranc@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/16 15:00:23 by alefranc          #+#    #+#              #
-#    Updated: 2022/06/22 18:43:56 by alefranc         ###   ########.fr        #
+#    Updated: 2022/06/22 19:03:53 by alefranc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,7 +65,7 @@ HEADER = include/philo2.h
 #              SUMMARY               #
 #------------------------------------#
 
-LIB_ARCHIVE = $(LIBFT_A)
+LIB_ARCHIVE =
 INC_FLAG = $(PROJINC_FLAG)
 LIB_PATH =
 LIB_FLAG = -pthread
