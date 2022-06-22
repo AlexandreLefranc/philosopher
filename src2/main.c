@@ -6,7 +6,7 @@
 /*   By: alefranc <alefranc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 16:17:33 by alefranc          #+#    #+#             */
-/*   Updated: 2022/06/22 15:26:23 by alefranc         ###   ########.fr       */
+/*   Updated: 2022/06/22 18:19:43 by alefranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,13 +88,31 @@ static int	try_think(t_philo *self)
 	return (ERR_OK);
 }
 
+static int	clean_thread(t_philo *self)
+{
+	t_fork	*lfork;
+	t_fork	*rfork;
+
+	lfork = self->sim->forks + (self->id - 1) % self->sim->input->nb_philo;
+	rfork = self->sim->forks + (self->id - 0) % self->sim->input->nb_philo;
+	if (self->state == EATING)
+	{
+		pthread_mutex_unlock(&lfork->mutex);
+		pthread_mutex_unlock(&rfork->mutex);
+	}
+	self->state = DONE;
+	return (ERR_OK);
+}
+
 static int	try_change_state(t_philo *self)
 {
 	if (self->sim->any_death != 0)
-		self->state = DONE;
+		clean_thread(self);
 	else if (is_dead(self) == 1)
 		self->state = DEAD;
-	else if (self->state == THINKING && self->nb_meals >= self->sim->input->nb_meal_max)
+	else if (self->state == THINKING &&
+			 self->sim->input->nb_meal_max > 0 &&
+			 self->nb_meals >= self->sim->input->nb_meal_max)
 		self->state = DONE;
 	else if (self->state == THINKING)
 		try_eat(self);
@@ -115,7 +133,7 @@ static void	*life(void *arg)
 		pthread_mutex_lock(&self->sim->mutex);
 		try_change_state(self);
 		pthread_mutex_unlock(&self->sim->mutex);
-		usleep(200);
+		usleep(100);
 	}
 	return (NULL);
 }
@@ -125,11 +143,11 @@ static int	start_sim(t_sim *sim)
 	int	errcode;
 	int	i;
 
+	if (pthread_mutex_init(&sim->mutex, NULL) != 0)
+		return (ERR_MUTEX);
 	errcode = gettimeofday(&sim->t0, NULL);
 	if (errcode != 0)
 		return (ERR_TIME);
-	if (pthread_mutex_init(&sim->mutex, NULL) != 0)
-		return (ERR_MUTEX);
 	i = 0;
 	while (i < sim->input->nb_philo)
 	{
