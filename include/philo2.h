@@ -6,7 +6,7 @@
 /*   By: alefranc <alefranc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 16:16:38 by alefranc          #+#    #+#             */
-/*   Updated: 2022/06/16 15:44:52 by alefranc         ###   ########.fr       */
+/*   Updated: 2022/06/22 11:52:25 by alefranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ typedef struct s_philo
 	int				id;
 	int				state;
 	pthread_t		thread;
-	struct timeval	last_meal;
+	struct timeval	t_lastchange;
 	int				nb_meals;
 
 	struct s_sim	*sim;
@@ -78,5 +78,12 @@ typedef struct s_sim
 	t_fork			*forks;
 	t_philo			*philos;
 }	t_sim;
+
+int	init_sim(t_sim *sim, int argc, char **argv);
+
+void	print_usage();
+void	print_err(int errcode);
+
+int	monitor_sim(t_sim *sim);
 
 #endif

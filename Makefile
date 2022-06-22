@@ -6,7 +6,7 @@
 #    By: alefranc <alefranc@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/16 15:00:23 by alefranc          #+#    #+#              #
-#    Updated: 2022/06/16 16:14:49 by alefranc         ###   ########.fr        #
+#    Updated: 2022/06/22 11:52:36 by alefranc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,7 +48,10 @@ PROJINC_FLAG = -I include
 # 			sim.c
 
 SRCDIR = src2/
-SRCFILES =	main.c
+SRCFILES =	main.c \
+			init_sim.c \
+			print.c \
+			monitor.c
 
 
 SRC = $(addprefix $(SRCDIR), $(SRCFILES))
