@@ -6,24 +6,24 @@
 /*   By: alefranc <alefranc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 16:17:33 by alefranc          #+#    #+#             */
-/*   Updated: 2022/06/22 12:24:16 by alefranc         ###   ########.fr       */
+/*   Updated: 2022/06/22 15:26:23 by alefranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo2.h"
 
-// static long int	get_time_since(struct timeval t0)
-// {
-// 	long int		diff;
-// 	struct timeval	t1;
-//
-// 	if (gettimeofday(&t1, NULL) != 0)
-// 		return (-1);
-// 	diff = 0;
-// 	diff += (t1.tv_sec - t0.tv_sec) * 1000;
-// 	diff += (t1.tv_usec - t0.tv_usec) / 1000;
-// 	return (diff);
-// }
+static long int	get_time_since(struct timeval t0)
+{
+	long int		diff;
+	struct timeval	t1;
+
+	if (gettimeofday(&t1, NULL) != 0)
+		return (-1);
+	diff = 0;
+	diff += (t1.tv_sec - t0.tv_sec) * 1000;
+	diff += (t1.tv_usec - t0.tv_usec) / 1000;
+	return (diff);
+}
 
 static void	free_t_sim(t_sim *sim)
 {
@@ -33,19 +33,111 @@ static void	free_t_sim(t_sim *sim)
 	free(sim);
 }
 
-// static void	*routine(void *arg)
-// {
-// 	t_philo	*philo;
-//
-// 	philo = (t_philo *)arg;
-// 	philo->last_meal
-// 	while (1);
-// 	return (NULL);
-// }
+static int	try_eat(t_philo *self)
+{
+	t_fork	*lfork;
+	t_fork	*rfork;
+
+	lfork = self->sim->forks + (self->id - 1) % self->sim->input->nb_philo;
+	rfork = self->sim->forks + (self->id - 0) % self->sim->input->nb_philo;
+	if (lfork->state == AVAIL && rfork->state == AVAIL)
+	{
+		lfork->state = TAKEN;
+		pthread_mutex_lock(&lfork->mutex);
+		printf("%ld %d has taken a fork\n", get_time_since(self->sim->t0), self->id);
+		rfork->state = TAKEN;
+		pthread_mutex_lock(&rfork->mutex);
+		printf("%ld %d has taken a fork\n", get_time_since(self->sim->t0), self->id);
+		gettimeofday(&self->t_lastchange, NULL);
+		gettimeofday(&self->t_lastmeal, NULL);
+		self->nb_meals++;
+		self->state = EATING;
+		printf("%ld %d is eating\n", get_time_since(self->sim->t0), self->id);
+	}
+	return (ERR_OK);
+}
+
+static int	try_sleep(t_philo *self)
+{
+	t_fork	*lfork;
+	t_fork	*rfork;
+
+	lfork = self->sim->forks + (self->id - 1) % self->sim->input->nb_philo;
+	rfork = self->sim->forks + (self->id - 0) % self->sim->input->nb_philo;
+	if (get_time_since(self->t_lastchange) > self->sim->input->time2eat)
+	{
+		lfork->state = AVAIL;
+		pthread_mutex_unlock(&lfork->mutex);
+		rfork->state = AVAIL;
+		pthread_mutex_unlock(&rfork->mutex);
+		gettimeofday(&self->t_lastchange, NULL);
+		self->state = SLEEPING;
+		printf("%ld %d is sleeping\n", get_time_since(self->sim->t0), self->id);
+	}
+	return (ERR_OK);
+}
+
+static int	try_think(t_philo *self)
+{
+	if (get_time_since(self->t_lastchange) > self->sim->input->time2sleep)
+	{
+		gettimeofday(&self->t_lastchange, NULL);
+		self->state = THINKING;
+		printf("%ld %d is thinking\n", get_time_since(self->sim->t0), self->id);
+	}
+	return (ERR_OK);
+}
+
+static int	try_change_state(t_philo *self)
+{
+	if (self->sim->any_death != 0)
+		self->state = DONE;
+	else if (is_dead(self) == 1)
+		self->state = DEAD;
+	else if (self->state == THINKING && self->nb_meals >= self->sim->input->nb_meal_max)
+		self->state = DONE;
+	else if (self->state == THINKING)
+		try_eat(self);
+	else if (self->state == EATING)
+		try_sleep(self);
+	else if (self->state == SLEEPING)
+		try_think(self);
+	return (ERR_OK);
+}
+
+static void	*life(void *arg)
+{
+	t_philo	*self;
+
+	self = arg;
+	while (self->state != DEAD && self->state != DONE)
+	{
+		pthread_mutex_lock(&self->sim->mutex);
+		try_change_state(self);
+		pthread_mutex_unlock(&self->sim->mutex);
+		usleep(200);
+	}
+	return (NULL);
+}
 
 static int	start_sim(t_sim *sim)
 {
-	(void)sim;
+	int	errcode;
+	int	i;
+
+	errcode = gettimeofday(&sim->t0, NULL);
+	if (errcode != 0)
+		return (ERR_TIME);
+	if (pthread_mutex_init(&sim->mutex, NULL) != 0)
+		return (ERR_MUTEX);
+	i = 0;
+	while (i < sim->input->nb_philo)
+	{
+		sim->philos[i].t_lastchange = sim->t0;
+		sim->philos[i].t_lastmeal = sim->t0;
+		errcode = pthread_create(&sim->philos[i].thread, NULL, life, sim->philos + i);
+		i++;
+	}
 	return (ERR_OK);
 }
 

@@ -6,7 +6,7 @@
 /*   By: alefranc <alefranc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 16:16:38 by alefranc          #+#    #+#             */
-/*   Updated: 2022/06/22 11:52:25 by alefranc         ###   ########.fr       */
+/*   Updated: 2022/06/22 14:24:50 by alefranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ typedef struct s_philo
 	int				state;
 	pthread_t		thread;
 	struct timeval	t_lastchange;
+	struct timeval	t_lastmeal;
 	int				nb_meals;
 
 	struct s_sim	*sim;
@@ -72,8 +73,9 @@ typedef struct s_philo
 
 typedef struct s_sim
 {
-	int				running;
+	int				any_death;
 	struct timeval	t0;
+	pthread_mutex_t	mutex;
 	t_input			*input;
 	t_fork			*forks;
 	t_philo			*philos;
@@ -85,5 +87,7 @@ void	print_usage();
 void	print_err(int errcode);
 
 int	monitor_sim(t_sim *sim);
+
+int	is_dead(t_philo *self);
 
 #endif

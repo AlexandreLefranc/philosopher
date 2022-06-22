@@ -6,7 +6,7 @@
 #    By: alefranc <alefranc@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/16 15:00:23 by alefranc          #+#    #+#              #
-#    Updated: 2022/06/22 11:52:36 by alefranc         ###   ########.fr        #
+#    Updated: 2022/06/22 14:15:56 by alefranc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,8 @@ SRCDIR = src2/
 SRCFILES =	main.c \
 			init_sim.c \
 			print.c \
-			monitor.c
+			monitor.c \
+			thread_util.c
 
 
 SRC = $(addprefix $(SRCDIR), $(SRCFILES))
@@ -67,7 +68,7 @@ OBJ = $(addprefix $(OBJDIR), $(SRCFILES:.c=.o))
 #               HEADER               #
 #------------------------------------#
 
-HEADER = include/philo.h
+HEADER = include/philo2.h
 
 #------------------------------------#
 #              MINILIBX              #
