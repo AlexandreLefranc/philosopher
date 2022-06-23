@@ -6,7 +6,7 @@
 /*   By: alefranc <alefranc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 16:17:33 by alefranc          #+#    #+#             */
-/*   Updated: 2022/06/23 13:31:02 by alefranc         ###   ########.fr       */
+/*   Updated: 2022/06/23 13:48:31 by alefranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int	try_eat(t_philo *self)
 
 	lfork = self->sim->forks + (self->id - 1) % self->sim->input->nb_philo;
 	rfork = self->sim->forks + (self->id - 0) % self->sim->input->nb_philo;
-	if (self->allowed == 1 && lfork->state == AVAIL && rfork->state == AVAIL)
+	if (lfork->state == AVAIL && rfork->state == AVAIL)
 	{
 		lfork->state = TAKEN;
 		pthread_mutex_lock(&lfork->mutex);
