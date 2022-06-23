@@ -68,6 +68,7 @@ static int	init_philo(t_sim *sim)
 		sim->philos[i].state = THINKING;
 		sim->philos[i].nb_meals = 0;
 		sim->philos[i].sim = sim;
+		sim->philos[i].allowed = 1;
 		i++;
 	}
 	return (ERR_OK);

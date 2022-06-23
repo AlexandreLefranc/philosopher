@@ -6,7 +6,7 @@
 /*   By: alefranc <alefranc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 16:16:38 by alefranc          #+#    #+#             */
-/*   Updated: 2022/06/22 14:24:50 by alefranc         ###   ########.fr       */
+/*   Updated: 2022/06/23 12:04:28 by alefranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ typedef struct s_philo
 	struct timeval	t_lastmeal;
 	int				nb_meals;
 
+	int				allowed;
 	struct s_sim	*sim;
 }	t_philo;
 
