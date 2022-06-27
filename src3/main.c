@@ -3,8 +3,8 @@
 static void	free_t_sim(t_sim *sim)
 {
 	free(sim->input);
-	// free(sim->forks);
-	// free(sim->philos);
+	free(sim->forks);
+	free(sim->philos);
 	free(sim);
 }
 
@@ -69,6 +69,42 @@ static int	check_input(t_sim *sim)
 	return (ERR_OK);
 }
 
+static int	init_forks(t_sim *sim)
+{
+	int	i;
+
+	sim->forks = malloc(sizeof(*sim->forks) * sim->input->nb_philo);
+	if (sim->forks == NULL)
+		return (ERR_MALLOC);
+	i = 0;
+	while (i < sim->input->nb_philo)
+	{
+		if (pthread_mutex_init(&sim->forks[i], NULL) != 0)
+			return (ERR_MUTEX);
+		i++;
+	}
+	return (ERR_OK);
+}
+
+static int	init_philo(t_sim *sim)
+{
+	int	i;
+
+	sim->philos = malloc(sizeof(*sim->philos) * sim->input->nb_philo);
+	if (sim->philos == NULL)
+		return (ERR_MALLOC);
+	i = 0;
+	while (i < sim->input->nb_philo)
+	{
+		sim->philos[i].id = i;
+		sim->philos[i].lfork = &sim->forks[(i - 1) % sim->input->nb_philo];
+		sim->philos[i].rfork = &sim->forks[(i - 0) % sim->input->nb_philo];
+		sim->philos[i].nb_meal = 0;
+		i++;
+	}
+	return (ERR_OK);
+}
+
 static int	init_sim(t_sim *sim, int argc, char **argv)
 {
 	int	errcode;
@@ -79,12 +115,31 @@ static int	init_sim(t_sim *sim, int argc, char **argv)
 	errcode = check_input(sim);
 	if (errcode != ERR_OK)
 		return (errcode);
-	// errcode = init_forks(sim);
-	// if (errcode != ERR_OK)
-	// 	return (errcode);
-	// errcode = init_philo(sim);
-	// if (errcode != ERR_OK)
-	// 	return (errcode);
+	errcode = init_forks(sim);
+	if (errcode != ERR_OK)
+		return (errcode);
+	errcode = init_philo(sim);
+	if (errcode != ERR_OK)
+		return (errcode);
+	sim->any_death = 0;
+	if (gettimeofday(&sim->t0, NULL) != 0)
+		return (ERR_TIME);
+	if (pthread_mutex_init(&sim->gmutex, NULL) != 0)
+		return (ERR_MUTEX);
+	return (ERR_OK);
+}
+
+static int	start_sim(t_sim *sim)
+{
+	int	i;
+
+	i = 0;
+	while (i < sim->input->nb_philo)
+	{
+		// set t_lastmeal
+		// launch thread
+		i++;
+	}
 	return (ERR_OK);
 }
 
@@ -99,4 +154,5 @@ int	main(int argc, char **argv)
 	errcode = init_sim(sim, argc, argv);
 	if (errcode != ERR_OK)
 		return (free_t_sim(sim), print_err(errcode), errcode);
+	start_sim(sim);
 }

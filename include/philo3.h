@@ -25,13 +25,24 @@ typedef struct s_input
 	int	nb_meal_max;
 }	t_input;
 
+typedef struct s_philo
+{
+	int				id;
+	pthread_t		thread;
+	pthread_mutex_t	*lfork;
+	pthread_mutex_t	*rfork;
+	struct timeval	t_lastmeal;
+	int				nb_meal;
+}	t_philo;
+
 typedef struct s_sim
 {
 	int				any_death;
 	struct timeval	t0;
+	pthread_mutex_t	gmutex;
+	pthread_mutex_t	*forks;
 	t_input			*input;
-	// t_fork			*forks;
-	// t_philo			*philos;
+	t_philo			*philos;
 }	t_sim;
 
 #endif
