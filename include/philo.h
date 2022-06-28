@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alefranc <alefranc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/16 13:15:49 by alefranc          #+#    #+#             */
-/*   Updated: 2022/06/13 14:52:48 by alefranc         ###   ########.fr       */
+/*   Created: 2022/06/28 03:40:53 by alefranc          #+#    #+#             */
+/*   Updated: 2022/06/28 03:53:47 by alefranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,15 @@
 # include <stdlib.h>
 # include <sys/time.h>
 # include <pthread.h>
-
 # include <stdio.h>
 
-enum e_fork_state
+enum e_errors
 {
-	FREE,
-	USED
+	ERR_OK = 0,
+	ERR_MALLOC,
+	ERR_ARG,
+	ERR_MUTEX,
+	ERR_TIME
 };
 
 typedef struct s_input
@@ -35,64 +37,46 @@ typedef struct s_input
 	int	nb_meal_max;
 }	t_input;
 
-typedef struct s_philo_id_card
+typedef struct s_philo
 {
-	pthread_t		thread;
 	int				id;
-	struct timeval	start_existance;
-	struct timeval	last_meal;
-	int				nb_meals;
-	int				*lfork;
-	int				*rfork;
-	pthread_mutex_t	*handle_fork;
-	int				*running;
-	t_input			*input;
-}	t_philo_id_card;
+	pthread_t		thread;
+	pthread_mutex_t	*lfork;
+	pthread_mutex_t	*rfork;
+	struct timeval	t_lastmeal;
+	int				nb_meal;
+	struct s_sim	*sim;
+}	t_philo;
 
 typedef struct s_sim
 {
-	int				running;
-	t_input			input;
-	pthread_mutex_t	handle_fork;
-	int				*forks;
-	t_philo_id_card	*philo;
+	int				any_death;
+	struct timeval	t0;
+	pthread_mutex_t	gmutex;
+	pthread_mutex_t	*forks;
+	t_input			*input;
+	t_philo			*philos;
 }	t_sim;
 
-// typedef struct s_table
-// {
-// 	int			*forks;
-// 	pthread_t	*philos;
-// }	t_table;
+int			init_sim(t_sim *sim, int argc, char **argv);
 
-// typedef struct s_thread_arg
-// {
-// 	int				*running;
-// 	pthread_mutex_t	handle_fork;
-// 	struct timeval	start_time;
-// 	t_input			*input;
-//
-// 	size_t			id;
-// 	int				*left_fork;
-// 	int				*right_fork;
-// 	size_t			nb_meals;
-// 	struct timeval	last_meal;
-// }	t_thread_arg;
+void		free_t_sim(t_sim *sim);
+long int	time_since(struct timeval t0);
+void		print_usage(void);
+void		print_err(int errcode);
+void		*ft_calloc(size_t nmemb, size_t size);
+int			ft_atoi(const char *s);
 
-// parse.c
-int	parse_input(t_input *input, int argc, char **argv);
+void		print_take_fork(t_philo *self);
+void		print_eating(t_philo *self);
+void		print_sleeping(t_philo *self);
+void		print_thinking(t_philo *self);
 
-// forks.c
-pthread_mutex_t	*init_forks(int nb_philo);
-int	destroy_forks(pthread_mutex_t **forks, int nb_philo);
+int			monitor_sim(t_sim *sim);
 
-// philo.c
-pthread_t	*init_philos(t_input *input);
-int		destroy_philos(pthread_t **philos);
+int			start_sim(t_sim *sim);
 
-// debug.c
-void	print_philo(t_philo_id_card *philo);
-void	print_input(t_input input);
-void	print_t_sim(t_sim sim);
-
+int			philo_forks_eat(t_philo *self);
+int			philo_sleep_think(t_philo *self);
 
 #endif

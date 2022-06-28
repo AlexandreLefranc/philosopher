@@ -6,7 +6,7 @@
 #    By: alefranc <alefranc@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/16 15:00:23 by alefranc          #+#    #+#              #
-#    Updated: 2022/06/22 19:03:53 by alefranc         ###   ########.fr        #
+#    Updated: 2022/06/28 03:52:50 by alefranc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,27 +23,22 @@
 NAME = philo
 
 CC = clang
-CFLAG = -Wall -Wextra -Werror -O2 -g3
+CFLAG = -Wall -Wextra -Werror #-O2
 PROJINC_FLAG = -I include
 
 #------------------------------------#
 #               SOURCES              #
 #------------------------------------#
 
-# SRCDIR = src/
-# SRCFILES =	main.c\
-# 			debug.c\
-# 			forks.c\
-# 			parse.c\
-# 			philo.c\
-# 			sim.c
-
-SRCDIR = src2/
+SRCDIR = src/
 SRCFILES =	main.c \
 			init_sim.c \
-			print.c \
 			monitor.c \
-			thread_util.c
+			philo_action.c \
+			print_states.c \
+			start_sim.c \
+			utils.c \
+			utils2.c
 
 
 SRC = $(addprefix $(SRCDIR), $(SRCFILES))
@@ -59,7 +54,7 @@ OBJ = $(addprefix $(OBJDIR), $(SRCFILES:.c=.o))
 #               HEADER               #
 #------------------------------------#
 
-HEADER = include/philo2.h
+HEADER = include/philo.h
 
 #------------------------------------#
 #              SUMMARY               #
