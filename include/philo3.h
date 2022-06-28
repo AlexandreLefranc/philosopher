@@ -33,6 +33,7 @@ typedef struct s_philo
 	pthread_mutex_t	*rfork;
 	struct timeval	t_lastmeal;
 	int				nb_meal;
+	struct s_sim	*sim;
 }	t_philo;
 
 typedef struct s_sim
